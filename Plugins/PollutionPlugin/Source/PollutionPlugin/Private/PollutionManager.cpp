@@ -61,6 +61,12 @@ void APollutionManager::Tick(float DeltaTime)
 
 	if (AreWindWeightsDirty) UpdateWindDirection();
 
+	if (!BufferToLoad.IsEmpty()) {
+		BufferA = BufferToLoad;
+		BufferB = BufferToLoad;
+		BufferToLoad.Empty();
+	}
+
 	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [&]() {
 
 		for (auto a : WorkingEditQueue) {
@@ -267,6 +273,13 @@ void APollutionManager::UpdateWindDirection()
 		i.FinalPercentage = i.FinalPercentage / tot;
 
 	AreWindWeightsDirty = false;
+}
+
+bool APollutionManager::LoadBuffer(TArray<float> Buffer)
+{
+	if (Buffer.Num() != BufferA.Num()) return false;
+	BufferToLoad = Buffer;
+	return true;
 }
 
 SpreadDirection::SpreadDirection()

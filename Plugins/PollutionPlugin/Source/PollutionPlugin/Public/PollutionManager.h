@@ -105,6 +105,8 @@ public:
 	UTexture2D* GetPollutionTexture(FName Pollutant, UTexture2D* TextureToUpdate = nullptr);
 	UFUNCTION(BlueprintCallable, Category = "Pollution")
 	void SetWind(FVector2D Direction, float Strength);
+	UFUNCTION(BlueprintCallable, Category = "Pollution")
+	bool LoadBuffer(TArray<float> Buffer);
 
 
 	void ProcessGridPoint(int32 PollutantIndex, FIntPoint Position);
@@ -129,4 +131,5 @@ public:
 	TArray<FQueueEditPollution> WorkingEditQueue;
 	FDateTime OperationStartTime;
 	bool AreWindWeightsDirty;
+	TArray<float> BufferToLoad;
 };
